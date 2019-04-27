@@ -13,7 +13,7 @@ public class MemoryJframe extends JFrame{
 	JButton Jbutton;	
 	MemoryColours color = new MemoryColours();
 	MemoryCard card = new MemoryCard();
-	int numButton;
+	int numButton = 18;
 	
 	public MemoryJframe(){		
 		JFrame frame = new JFrame("Flow Layout");//create Jframe
@@ -30,40 +30,44 @@ public class MemoryJframe extends JFrame{
 				MemoryCard firstOpen;
 				
 				public void actionPerformed(ActionEvent e){ 
+					MemoryCard clickbutton = (MemoryCard)e.getSource();//get clicked button	
+					clickbutton.setOpen(true);//laat kleur zien van geklikte button						
+
 					
 					for(int mc = 0 ; mc < Jbutton.length; mc++) {//deze loopt door alle MemoryCards
-						MemoryCard clickbutton = (MemoryCard)e.getSource();//get clicked button	
-						clickbutton.setOpen(true);//laat kleur zien van geklikte button						
 						
+						if(mc == numButton) mc++;
 						if(Jbutton[mc].getOpen() && !Jbutton[mc].isFound())//kijkt of een card al is omgedraaid
 						{		
-//							if(mc == numButton) mc++;
-							System.out.print(firstFound + "before firstFound ");
-							if(firstFound) //checkt of dit de eerste card is gevonden en omgedraaid
+							
+							if(firstFound) //Deze if-statement
+							//checkt of dit de eerste card is gevonden en omgedraaid
 							{
 								System.out.println("1 ");
 								if(firstOpen.getColor().equals(Jbutton[mc].getColor())) 
 								{
-									firstOpen.setFound(true);
 									System.out.println("2 ");
+									firstOpen.setFound(true);									
 									Jbutton[mc].setFound(true);	
 									Jbutton[mc].setOpen(true);
 								} else 
 								{
 									try{
+										/*Hier worden de kaarten omgedraaid die niet met elkaar matchen*/
 										System.out.println("3 ");
 										frame.getContentPane().repaint();
 //										TimeUnit.SECONDS.sleep(1);
 										Jbutton[mc].setOpen(false);
 										firstOpen.setOpen(false);
-										clickbutton.setOpen(false);//laat kleur zien van geklikte button
+										clickbutton.setOpen(false);
 										firstFound = false;
 										
 									}catch(Exception ex) {}
 								}
 							} else 
 							{
-								System.out.println("4 ");
+								/*Het eerst omgedraaide kaartje*/
+								System.out.println("4 " + mc );
 								firstOpen = Jbutton[mc];
 								numButton = mc;
 								firstFound = true;
