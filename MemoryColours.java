@@ -7,25 +7,21 @@ import java.util.List;
 import java.util.Random;
 
 
-public class MemoryColours {	
-	//als de game laat
-	//dan worden de kleuren al bepaald
-	//en zet je de "visibility" op false
-	
+public class MemoryColours {		
 	//Color array met allemaal dubbele kleuren om ze met elkaar te matchen
 	Color[] colorArr = {Color.RED, Color.RED, Color.GREEN, Color.GREEN, Color.CYAN, 
 			Color.CYAN, Color.PINK, Color.PINK, Color.ORANGE,Color.ORANGE, Color.DARK_GRAY, 
 			Color.DARK_GRAY, Color.BLUE, Color.BLUE, Color.MAGENTA, Color.MAGENTA};
 
-	List<Color> ColorList = new ArrayList<Color>(Arrays.asList(colorArr));//veranderd color array naar arraylist
+	List<Color> colorList = new ArrayList<Color>(Arrays.asList(colorArr));//veranderd color array naar arraylist
 	
-	public Color getColours() {		
-		int rnd = new Random().nextInt(ColorList.size());//kiest een random nummer tussen de  en de size van Colorlist
+	public Color getRandomColour() {		
+		int rnd = new Random().nextInt(colorList.size());//kiest een random nummer tussen de  en de size van Colorlist
 		
-		Color Colorint = ColorList.get(rnd);//"pakt" de gekozen kleur en zet hem in Colorint
-		ColorList.remove(rnd);//verwijderd de kleur uit de arraylist zodat die niet nog een keer gekozen kan worden
+		Color colorint = colorList.get(rnd);//"pakt" de gekozen kleur en zet hem in Colorint
+		colorList.remove(rnd);//verwijderd de kleur uit de arraylist zodat die niet nog een keer gekozen kan worden
 		
-		return Colorint;			
+		return colorint;			
 	}	
 }	
 
