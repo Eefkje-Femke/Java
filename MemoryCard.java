@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 public class MemoryCard extends JButton{
+	/*object MemoryCard met de eigenschappen color, open en found*/
 	private Color color;
 	private boolean open = false;
 	private boolean found = false;
