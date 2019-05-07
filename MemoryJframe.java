@@ -17,6 +17,8 @@ public class MemoryJframe extends JFrame{
 	MemoryCard card1 = null;
 	MemoryCard card2 = null;
 	int countSet = 0;
+	
+	JLabel lNum;
 
 	public MemoryJframe(){		
 		JFrame frame = new JFrame("Flow Layout");//create Jframe
@@ -25,7 +27,10 @@ public class MemoryJframe extends JFrame{
 		JPanel p1 = new JPanel();//panel links
         JPanel p2 = new JPanel();//panel rechts
         JLabel lTitle=new JLabel("Sets found: "); 
-        JLabel lNum=new JLabel("");
+        
+        System.out.println(Integer.toString(countSet));
+		lNum = new JLabel(String.valueOf(countSet));
+        
         JLabel lText=new JLabel("<html>Please wait 1 second <br /> before you try to find another match</html>");
         JButton restartbut=new JButton("Restart the game");
      
@@ -50,8 +55,8 @@ public class MemoryJframe extends JFrame{
 			}
 		});  
 	
-		System.out.println(Integer.toString(countSet));
-		lNum.setText(String.valueOf(countSet));		
+//		System.out.println(Integer.toString(countSet));
+//		lNum.setText(String.valueOf(countSet));		
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, p1, p2);
 		splitPane.setDividerLocation(400);//de divider tussen de 2 panels	
@@ -84,6 +89,8 @@ public class MemoryJframe extends JFrame{
 				if (card1.getColor() == card2.getColor()) 
 				{
 					countSet++;
+					System.out.println(Integer.toString(countSet));
+					lNum.setText(String.valueOf(countSet));	
 					System.out.println("gevonden");
 					card1 = null;
 					card2 = null;
