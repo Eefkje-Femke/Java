@@ -17,39 +17,46 @@ import javax.swing.JTextField;
 //import java3opdrcht.Persoon;
 
 public class MyFrame extends JFrame{
-	JTextField textfname;
-	JTextField textflast;
+	JTextField textName;
+	JTextField textlast;
 	DefaultListModel<Persoon> listModel;
 	
 
 	public MyFrame(){
 		ConnectDB connection = new ConnectDB();
 
-		textfname = new JTextField(15);//create textfieldname
-		textfname.setBounds(50,50, 150,20);  
+		textName = new JTextField(15);//create textfieldname
+		textName.setBounds(50,50, 150,20);  
 		
-		textfname.setBackground(Color.YELLOW);
+		textName.setBackground(Color.YELLOW);
 		
-		textflast = new JTextField(15);//create textfieldlastname
-		textflast.setBounds(50,50, 150,20); 
-		textflast.setBackground(Color.ORANGE);
+		textlast = new JTextField(15);//create textfieldlastname
+		textlast.setBounds(50,50, 150,20); 
+		textlast.setBackground(Color.ORANGE);
 			
 		listModel = new DefaultListModel<>(); //creating list
 		JList<Persoon> list = new JList<>(listModel);//create string list  
 		list.setBounds(270,50, 100,150);  
     
-		for (Persoon p: connection.getAllPersons()) {
-			listModel.addElement(p);
-		}
+		JButton getNaam = new JButton("button getName");
+		getNaam.addActionListener(new ActionListener(){//button action  
+			public void actionPerformed(ActionEvent e){ 
+				for (Persoon p: connection.getAllPersons()) {
+					listModel.addElement(p);
+				}
+			}
+		});
+	        	
+		
 		
         //create button 
-        JButton button = new JButton("Add name"); 
-        button.setBounds(50,105,100,30);  
-        button.addActionListener(new ActionListener(){//button action  
+        JButton butAddName = new JButton("Add name"); 
+        butAddName.setBounds(50,105,100,30);  
+        butAddName.addActionListener(new ActionListener(){//button action  
         	public void actionPerformed(ActionEvent e){ 
         		Persoon p = new Persoon();//papiertje waarop de foto komt
-        		p.setVoorNaam(textfname.getText());//foto
-        		p.setAchterNaam(textflast.getText());
+        		p.setVoorNaam(textName.getText());//foto
+        		p.setAchterNaam(textlast.getText());
         		listModel.addElement(p);//listmodel=doosje
 			}  
 		});        
@@ -57,29 +64,40 @@ public class MyFrame extends JFrame{
 		JPanel p = new JPanel(new GridBagLayout());//create panel with certain layout
 		GridBagConstraints c = new GridBagConstraints();//gridbag constant
 
-		c.fill = GridBagConstraints.HORIZONTAL;//add textfield name to panel layout
+		c.fill = GridBagConstraints.BOTH;//add textfield name to panel layout
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		c.weightx = 0.2;
+		p.add(textName,c);
+
+		//add textfield lastname to panel layout		
 		c.gridx = 0;
 		c.gridy = 1;
-		p.add(textfname,c);
-
-		//add textfield lastname to panel layout
-		c.gridwidth = 1;
-		c.gridx = 1;
-		c.gridy = 1;
-		p.add(textflast,c);
+		c.gridwidth = 2;
+		c.weightx = 0.2;
+		p.add(textlast,c);
 		
 		//add button to panel layout
+		c.gridx = 3;
+		c.gridy = 0;
 		c.gridwidth = 1;
-		c.gridx = 2;
-		c.gridy = 1;
-		p.add(button,c);
+		c.weightx = 0.2;
+		p.add(butAddName,c);
 		
-		//add jlist to panel layout
-		c.gridx = 2;
-		c.gridwidth = 1;   
-		c.gridy = 2;    
+		//get namen uit de DB
+		c.gridx = 0;
+		c.gridy = 2; 
+		c.gridwidth = 1;
+		c.weightx = 0.2;
+		p.add(getNaam,c);
+		
+		//add JList to panel layout
+		c.gridx = 3;
+		c.gridy = 3;   
+		c.gridwidth = 1;
+		c.weightx = 0.2;
 		p.add(list,c);
-		
 		
 		this.add(p);//add panel(container) to frame
 		this.setSize(600,400);  	
