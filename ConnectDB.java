@@ -3,59 +3,68 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.sql.Statement;
-//import java.util.Date;
 
 public class ConnectDB {
 	private Connection connection =  null;
 	String url = "jdbc:mysql://localhost:3306/personen?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	String username = "root";
 	String password = "";
-	
+
 	public ConnectDB() {
 		System.out.println("Connecting database...");		
 	}
-	
+
 	private void connect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url, username, password);
 			System.out.println("Database connected!");
-			
+
 		} catch (SQLException | ClassNotFoundException e) {
 			throw new IllegalStateException("Cannot connect the database!", e);
 		}
 	}
-	
+
 	public List<Persoon> getAllPersons() {
 		ResultSet resultSet = null;
 		connect();
 		Statement statement;
 		ArrayList<Persoon> personen = new ArrayList<Persoon>();
+
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM naam");
-			
+
 			while(resultSet.next()) {
 				Persoon p = new Persoon();
 				p.voorNaam = resultSet.getString("Naam");
 				personen.add(p);
 			}
-//			writeResultSet(resultSet);
+			//writeResultSet(resultSet);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		 
-		
 		return personen;		
 	}
-	
+
+	public void insertNewName(String FirstName, String LastName) {
+		connect();
+		try {
+			// create SQL Query
+			String insertTableSQL = "INSERT INTO naam" + "(Naam) VALUES" + "(?)";
+			PreparedStatement preparedStatement = connection.prepareStatement(insertTableSQL);
+			preparedStatement.setString(1, FirstName + LastName);
+			preparedStatement .executeUpdate();
+
+			connection.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+
 	private void writeResultSet(ResultSet resultSet) throws SQLException {
 		// ResultSet is initially before the first data set
 		while (resultSet.next()) {
@@ -64,15 +73,7 @@ public class ConnectDB {
 			// which starts at 1
 			// e.g. resultSet.getSTring(2);
 			String naam = resultSet.getString("Naam");
-//			String website = resultSet.getString("webpage");
-//			String summary = resultSet.getString("summary");
-//			Date date = resultSet.getDate("datum");
-//			String comment = resultSet.getString("comments");
 			System.out.println("Naam: " + naam);
-//			System.out.println("Website: " + website);
-//			System.out.println("summary: " + summary);
-//			System.out.println("Date: " + date);
-//			System.out.println("Comment: " + comment);
 		}
 	}
 
