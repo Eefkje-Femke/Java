@@ -28,17 +28,15 @@ public class MyFrame extends JFrame{
 		textName = new JTextField(15);//create textfieldname
 		textName.setBounds(50,50, 150,20);  
 		
-		textName.setBackground(Color.YELLOW);
-		
 		textlast = new JTextField(15);//create textfieldlastname
 		textlast.setBounds(50,50, 150,20); 
-		textlast.setBackground(Color.ORANGE);
 			
 		listModel = new DefaultListModel<>(); //creating list
 		JList<Persoon> list = new JList<>(listModel);//create string list  
 		list.setBounds(270,50, 100,150);  
     
-		JButton getNaam = new JButton("button getName");
+		//show names in database
+		JButton getNaam = new JButton("Namen in de database");
 		getNaam.addActionListener(new ActionListener(){//button action  
 			public void actionPerformed(ActionEvent e){ 
 				for (Persoon p: connection.getAllPersons()) {
@@ -46,25 +44,26 @@ public class MyFrame extends JFrame{
 				}
 			}
 		});
-	        	
-		
-		
-        //create button 
-        JButton butAddName = new JButton("Add name"); 
+
+        //add name to database
+        JButton butAddName = new JButton("Voeg naam toe"); 
         butAddName.setBounds(50,105,100,30);  
         butAddName.addActionListener(new ActionListener(){//button action  
         	public void actionPerformed(ActionEvent e){ 
         		Persoon p = new Persoon();//papiertje waarop de foto komt
         		p.setVoorNaam(textName.getText());//foto
         		p.setAchterNaam(textlast.getText());
-        		listModel.addElement(p);//listmodel=doosje
+        		
+        		connection.insertNewName(p.getVoorNaam(), p.getAchterNaam());
 			}  
 		});        
         
+        //Layout for the frame
 		JPanel p = new JPanel(new GridBagLayout());//create panel with certain layout
 		GridBagConstraints c = new GridBagConstraints();//gridbag constant
 
-		c.fill = GridBagConstraints.BOTH;//add textfield name to panel layout
+		//add textfield firstname to panel layout
+		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 2;
@@ -78,14 +77,14 @@ public class MyFrame extends JFrame{
 		c.weightx = 0.2;
 		p.add(textlast,c);
 		
-		//add button to panel layout
+		//add button addName to panel layout
 		c.gridx = 3;
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.weightx = 0.2;
 		p.add(butAddName,c);
 		
-		//get namen uit de DB
+		//add button getNaam to panel layout
 		c.gridx = 0;
 		c.gridy = 2; 
 		c.gridwidth = 1;
