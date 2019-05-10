@@ -1,6 +1,5 @@
 package java3opdrcht;
 
-
 import javax.swing.JFrame;
 
 public class MemoryGame extends JFrame{

@@ -14,13 +14,13 @@ public class MemoryColours {
 			Color.DARK_GRAY, Color.BLUE, Color.BLUE, Color.MAGENTA, Color.MAGENTA};
 
 	List<Color> colorList = new ArrayList<Color>(Arrays.asList(colorArr));//veranderd color array naar arraylist
-	
+
 	public Color getRandomColour() {		
 		int rnd = new Random().nextInt(colorList.size());//kiest een random nummer tussen de  en de size van Colorlist
-		
+
 		Color colorint = colorList.get(rnd);//"pakt" de gekozen kleur en zet hem in Colorint
 		colorList.remove(rnd);//verwijderd de kleur uit de arraylist zodat die niet nog een keer gekozen kan worden
-		
+
 		return colorint;			
 	}	
 }	
