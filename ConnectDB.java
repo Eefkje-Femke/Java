@@ -60,7 +60,7 @@ public class ConnectDB {
 			preparedStatement.setString(1, FirstName + LastName);
 			preparedStatement .executeUpdate();
 			System.out.println("Name inserted into table");
-			
+
 			connection.close();
 
 		} catch (SQLException e) {

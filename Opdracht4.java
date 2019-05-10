@@ -14,16 +14,16 @@ import javax.swing.SwingUtilities;
 
 
 public class Opdracht4 {
-	
+
 	public static void main(String [ ] args) {
-		
+
 		SwingUtilities.invokeLater(new Runnable() {
-			
+
 			public void run() {
 				new MyFrame().setVisible(true);
 			}
 		});		
-	
+
 	}
 }
 
